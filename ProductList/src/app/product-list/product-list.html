@@ -1,0 +1,33 @@
+<div>
+  <div class="bg-blue-600 text-white px-3 py-3">
+    {{ title }}
+  </div>
+  <div class="p-4">
+    <div>
+      @if (products && products.length > 0){
+      <table class="w-full">
+        <thead>
+          <tr class="bg-gray-300 text-center">
+            <th class="py-2 px-4">{{ headers.desc }}</th>
+            <th class="py-2 px-4">{{ headers.price }}</th>
+            <th class="py-2 px-4">{{ headers.avail }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Aquí van los productos. Por ahora se queda vacío -->
+          <!--No entiendo que hace el track, repasar -->
+          @for (product of products; track product.id) {
+          <tr>
+            <!--Lo comento por que se le paso a ella -->
+            <!--<td><img [src]="product.imageUrl" alt="" /></td> -->
+            <td>{{ product.desc }}</td>
+            <td>{{ product.price }}</td>
+            <td>{{ product.avail }}</td>
+          </tr>
+          }
+        </tbody>
+      </table>
+      }
+    </div>
+  </div>
+</div>
