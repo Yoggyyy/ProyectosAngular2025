@@ -1,0 +1,5 @@
+td {
+vertical-align: middle;
+}
+td:first-child img { height: 40px;
+}
