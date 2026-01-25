@@ -1,0 +1,4 @@
+/* Para que los saltos de línea (\n) se muestren correctamente en la descripción */
+.card-text {
+  white-space: pre-wrap;
+}

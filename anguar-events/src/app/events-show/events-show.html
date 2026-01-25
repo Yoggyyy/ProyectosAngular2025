@@ -1,22 +1,84 @@
-<div class="flex flex-wrap -mx-2">
+<!-- Formulario para nuevo evento -->
+<form class="mt-4 bg-white rounded-lg shadow-md p-6 mb-6" (ngSubmit)="addEvent()">
+  <h3 class="text-xl font-bold text-gray-900 mb-4">Crear nuevo evento</h3>
+
+  <div class="mb-4">
+    <label for="title" class="block text-sm font-medium text-gray-700 mb-1">Nombre</label>
+    <input type="text" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+      name="title" [(ngModel)]="newEvent.title" placeholder="Introduce el nombre">
+  </div>
+
+  <div class="mb-4">
+    <label for="date" class="block text-sm font-medium text-gray-700 mb-1">Fecha</label>
+    <input type="date" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+      name="date" [(ngModel)]="newEvent.date">
+  </div>
+
+  <div class="mb-4">
+    <label for="description" class="block text-sm font-medium text-gray-700 mb-1">Descripción</label>
+    <textarea class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+      name="description" [(ngModel)]="newEvent.description" rows="3"></textarea>
+  </div>
+
+  <div class="mb-4">
+    <label for="price" class="block text-sm font-medium text-gray-700 mb-1">Precio</label>
+    <input type="number" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+      name="price" [(ngModel)]="newEvent.price" min="0.00" max="10000.00" step="0.01">
+  </div>
+
+  <div class="mb-4">
+    <label for="image" class="block text-sm font-medium text-gray-700 mb-1">Imagen</label>
+    <input type="file" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+      name="image" #fileImage (change)="changeImage(fileImage)">
+  </div>
+
+  @if (newEvent.image) {
+    <img [src]="newEvent.image" alt="Vista previa" class="max-w-xs rounded-md mb-4">
+  }
+
+  <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-md transition-colors">
+    Crear evento
+  </button>
+</form>
+
+<!-- Barra de navegación: filtro y ordenación -->
+<nav class="bg-gray-100 rounded-lg p-4 mt-4 flex flex-col md:flex-row md:justify-between md:items-center gap-4">
+  <ul class="flex gap-2">
+    <li>
+      <a class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 cursor-pointer transition-colors"
+        (click)="orderDate()">Orden por fecha</a>
+    </li>
+    <li>
+      <a class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 cursor-pointer transition-colors"
+        (click)="orderPrice()">Orden por precio</a>
+    </li>
+  </ul>
+  <form class="flex">
+    <input class="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+      type="text" [(ngModel)]="search" name="search" placeholder="Buscar evento...">
+  </form>
+</nav>
+
+<!-- Listado de eventos -->
+<div class="flex flex-wrap -mx-2 mt-4">
   @if (events.length === 0) {
     <h3 class="text-xl font-semibold text-gray-700 w-full px-2">No hay eventos disponibles</h3>
   }
-  @for (event of events; track event.title) {
+  @for (event of events | eventFilter: search; track event.title) {
     <div class="w-full md:w-1/2 px-2 mt-4">
       <div class="bg-white rounded-lg shadow-md overflow-hidden">
-         <img
-          [src]="event.imageUrl"
+        <img
+          [src]="event.image"
           alt=""
           class="w-full h-48 object-cover"
         />
         <div class="p-6">
-          <h4 class="text-lg font-bold text-gray-900 mb-2">{{ event.title }}</h4>
-          <p class="text-gray-600">{{ event.description }}</p>
+          <h4 class="text-lg font-bold text-gray-900 mb-2">{{ event.title | titlecase }}</h4>
+          <p class="card-text text-gray-600">{{ event.description }}</p>
         </div>
         <div class="bg-gray-50 px-6 py-3 text-sm text-gray-500 flex justify-between items-center">
-          <span>{{ event.date }}</span>
-          <span class="font-semibold text-gray-700">{{ event.price }}€</span>
+          <span>{{ event.date | date: 'dd/MM/y' }}</span>
+          <span class="font-semibold text-gray-700">{{ event.price | currency: 'EUR': 'symbol' }}</span>
         </div>
       </div>
     </div>

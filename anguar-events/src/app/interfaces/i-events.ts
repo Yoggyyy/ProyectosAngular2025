@@ -1,7 +1,7 @@
 export interface IEvents {
   title: string;
-  imageUrl: string;
-  date: Date;
+  image: string;
+  date: string;
   description: string;
   price: number;
 }
