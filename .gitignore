@@ -1,0 +1,12 @@
+# Carpeta gh-pages (se sube en su propia rama)
+/gh-pages
+
+# Node modules de cada proyecto
+node_modules/
+
+# Carpetas dist de cada proyecto
+dist/
+
+# Archivos de sistema
+.DS_Store
+Thumbs.db

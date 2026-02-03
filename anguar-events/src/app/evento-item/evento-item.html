@@ -1,0 +1,16 @@
+<img
+  [src]="event.image"
+  alt=""
+  class="w-full h-48 object-cover"
+/>
+<div class="p-6">
+  <h4 class="text-lg font-bold text-gray-900 mb-2">{{ event.title | titlecase }}</h4>
+  <p class="card-text text-gray-600">{{ event.description }}</p>
+  <div class="text-end mt-4">
+    <button class="bg-red-600 hover:bg-red-700 text-white font-medium py-2 px-4 rounded-md transition-colors" (click)="deleteEvento()">Delete</button>
+  </div>
+</div>
+<div class="bg-gray-50 px-6 py-3 text-sm text-gray-500 flex justify-between items-center">
+  <span>{{ event.date | date: 'dd/MM/y' }}</span>
+  <span class="font-semibold text-gray-700">{{ event.price | currency: 'EUR': 'symbol' }}</span>
+</div>
