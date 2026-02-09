@@ -1,6 +1,3 @@
-<!-- Componente para añadir nuevo evento -->
-<evento-add (added)="addEvent($event)"></evento-add>
-
 <!-- Barra de navegación: filtro y ordenación -->
 <nav class="bg-gray-100 rounded-lg p-4 mt-4 flex flex-col md:flex-row md:justify-between md:items-center gap-4">
   <ul class="flex gap-2">
@@ -24,7 +21,7 @@
   @if (events.length === 0) {
     <h3 class="text-xl font-semibold text-gray-700 w-full px-2">No hay eventos disponibles</h3>
   }
-  @for (event of events | eventFilter: search; track event.title) {
+  @for (event of events | eventFilter: search; track event.id) {
     <div class="w-full md:w-1/2 px-2 mt-4">
       <evento-item [event]="event" (deleted)="deleteEvento(event)"></evento-item>
     </div>

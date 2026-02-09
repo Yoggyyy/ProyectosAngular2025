@@ -1,6 +1,8 @@
-import { Component, Output, EventEmitter } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 import { IEvents } from '../interfaces/i-events';
+import { EventoService } from '../services/evento.service';
 
 @Component({
   selector: 'evento-add',
@@ -9,7 +11,9 @@ import { IEvents } from '../interfaces/i-events';
   styleUrl: './evento-add.css',
 })
 export class EventoAdd {
-  @Output() added = new EventEmitter<IEvents>();
+  // Inyectamos el servicio y el router
+  private eventoService = inject(EventoService);
+  private router = inject(Router);
 
   // Objeto para el nuevo evento
   newEvent: IEvents = {
@@ -21,17 +25,15 @@ export class EventoAdd {
   };
 
   // Método para añadir un nuevo evento
+  // Llama al servicio y cuando el servidor responde, navega al listado
   addEvent() {
-    // Emitimos una copia del evento al padre
-    this.added.emit({ ...this.newEvent });
-    // Reiniciar el formulario
-    this.newEvent = {
-      title: '',
-      description: '',
-      image: '',
-      price: 0,
-      date: ''
-    };
+    this.eventoService.addEvento(this.newEvent).subscribe({
+      next: () => {
+        // El evento se ha creado, navegamos al listado
+        this.router.navigate(['/eventos']);
+      },
+      error: (err) => console.error(err)
+    });
   }
 
   // Método para convertir la imagen a Base64

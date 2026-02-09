@@ -1,7 +1,14 @@
-<nav class="bg-gray-800 text-white p-4">
-    <a class="text-xl font-semibold" href="#">Angular Events</a>
-  </nav>
-  <div class="container mx-auto px-4">
-    <!-- Insertar aquí el componente events-show -->
-     <events-show></events-show>
-  </div>
+<nav class="bg-gray-800 text-white p-4 flex justify-between items-center">
+  <a class="text-xl font-semibold" routerLink="/eventos">Angular Events</a>
+  <ul class="flex gap-4">
+    <li>
+      <a class="hover:text-gray-300 transition-colors" routerLink="/eventos">Listado</a>
+    </li>
+    <li>
+      <a class="hover:text-gray-300 transition-colors" routerLink="/eventos/add">Añadir evento</a>
+    </li>
+  </ul>
+</nav>
+<div class="container mx-auto px-4">
+  <router-outlet></router-outlet>
+</div>
